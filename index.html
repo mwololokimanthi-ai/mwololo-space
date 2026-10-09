@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mwololo-backup — personal backup to Google Drive</title>
+<meta name="description" content="mwololo-backup is a personal backup utility that copies its operator's own files to their own Google Drive account.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+<h1>mwololo-backup</h1>
+
+<p class="lede">A personal backup utility. It copies the operator's own files from
+their own computer to their own Google Drive account. Nothing else.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Creates dated archives of a local configuration and home directory tree, and uploads
+      them to a folder inside the operator's own Google Drive.</li>
+  <li>Keeps encrypted snapshots of the same tree with <code>restic</code>, a rolling
+      retention window of 7 daily, 4 weekly and 6 monthly snapshots, and a size check on
+      every upload.</li>
+  <li>Runs unattended on the operator's machine and prints a report of the last run.</li>
+</ul>
+
+<h2>Who uses it</h2>
+<p>One person: the operator, who is also the developer. There is no sign-up, no public
+service and no third-party users. The tool is not offered to the public and creates no
+accounts.</p>
+
+<h2>How it reaches Google</h2>
+<p>mwololo-backup authorizes against a single Google account — the operator's own — with a
+single OAuth scope, <code>https://www.googleapis.com/auth/drive</code>. That scope is what
+Google requires to create, read and delete files in Drive. Within the account, the tool
+only reads back and cleans up the files it created itself, in the folder it manages. It
+requests no other Google service: no Gmail, no Calendar, no Contacts, no profile data.</p>
+
+<h2>Contact</h2>
+<p><a href="mailto:mwololokimanthi@gmail.com">mwololokimanthi@gmail.com</a></p>
+
+<footer>
+  <a href="/privacy.html">Privacy policy</a> · <a href="/terms.html">Terms of service</a>
+  · Last updated 10 October 2026
+</footer>
+</main>
+</body>
+</html>

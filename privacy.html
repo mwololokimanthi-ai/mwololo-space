@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy — mwololo-backup</title>
+<meta name="description" content="Privacy policy for mwololo-backup, a personal backup utility.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+<h1>Privacy policy — mwololo-backup</h1>
+<p class="updated">Last updated: 10 October 2026</p>
+
+<p>mwololo-backup is a personal backup utility. It runs on the operator's own computer and
+copies the operator's own files to the operator's own Google Drive account. This policy
+describes the one Google account it touches and what it does with the data it can reach.</p>
+
+<h2>What Google user data the app accesses</h2>
+<ul>
+  <li><strong>The Drive files of the authorizing account.</strong> The app requests the
+      single scope <code>https://www.googleapis.com/auth/drive</code>, which is the scope
+      Google requires to create, list, download and delete files in Drive. The app itself
+      creates the backup folder and the files inside it, and only ever reads and deletes
+      files inside that one folder.</li>
+  <li><strong>Basic account identity, as needed to authenticate.</strong> The OAuth
+      handshake returns an account identifier and email address so the tool can show which
+      account it is backing up to. The app requests no profile scopes and does not read
+      name, photo or contact data.</li>
+</ul>
+<p>The app requests no other Google service. It cannot and does not read Gmail, Calendar,
+Contacts, Photos, locations or device data.</p>
+
+<h2>How the data is used</h2>
+<ul>
+  <li>To upload the operator's encrypted and unencrypted backup archives to the account's
+      Drive folder.</li>
+  <li>To list those files, verify that an upload matches the local file by size, and delete
+      archives that fall outside the retention window.</li>
+  <li>To restore a backup on request. Restores are initiated by the operator.</li>
+</ul>
+<p>No other use is made of the data.</p>
+
+<h2>Where the data is stored</h2>
+<p>Backup files live in the operator's own Google Drive; the app stores no copy of them
+anywhere else. The app runs entirely on the operator's computer and sends Google user data
+to no server other than Google's own APIs. Encrypted snapshots are additionally stored on
+the operator's configured remote using client-side encryption, so their contents are
+unreadable without the operator's password.</p>
+
+<h2>Sharing</h2>
+<ul>
+  <li>Google user data is not shared with, sold to, or transferred to any third party.</li>
+  <li>The data is not used for advertising, profiling or credit decisions.</li>
+  <li>The data is not used to train or improve any machine learning model.</li>
+  <li>No human reads the data. There is one user, the operator, who is also the owner of
+      the data.</li>
+</ul>
+
+<h2>Google API Services User Data Policy and Limited Use</h2>
+<p>mwololo-backup's use and transfer to any other app of information received from Google
+APIs will adhere to the <a
+href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services
+User Data Policy</a>, including the Limited Use requirements.</p>
+
+<h2>Retention and deletion</h2>
+<ul>
+  <li>The app keeps archives according to a retention window configured on the operator's
+      machine (7 daily, 4 weekly, 6 monthly). Older files it created are deleted by the app.</li>
+  <li>The operator can delete any backup file directly in Google Drive at any time.</li>
+  <li>Access can be revoked at any time at
+      <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>,
+      which immediately ends the app's ability to reach the account. Nothing is retained
+      after that, because the app keeps no server-side copy.</li>
+</ul>
+
+<h2>Security</h2>
+<p>OAuth tokens are stored on the operator's machine in a file readable only by the
+operator's user account. The tool talks to Google over HTTPS only. Encrypted snapshots use
+a password that is never uploaded anywhere.</p>
+
+<h2>Changes</h2>
+<p>Changes to this policy are published on this page with a new date above.</p>
+
+<h2>Contact</h2>
+<p><a href="mailto:mwololokimanthi@gmail.com">mwololokimanthi@gmail.com</a></p>
+
+<footer>
+  <a href="/">Home</a> · <a href="/terms.html">Terms of service</a>
+</footer>
+</main>
+</body>
+</html>
