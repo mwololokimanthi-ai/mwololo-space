@@ -9,8 +9,8 @@ Static pages that satisfy Google's OAuth consent screen requirements for the per
 | file | served at | purpose |
 |---|---|---|
 | `public/index.html` | `/` | Home page: what the app is, who uses it, which scope it requests |
-| `public/privacy.html` | `/privacy.html` | Privacy policy incl. the Google API Limited Use statement |
-| `public/terms.html` | `/terms.html` | Terms of service |
+| `public/privacy.html` | `/privacy` | Privacy policy incl. the Google API Limited Use statement |
+| `public/terms.html` | `/terms` | Terms of service |
 | `public/style.css` | `/style.css` | One shared stylesheet, no external assets, no trackers |
 | `public/robots.txt` | `/robots.txt` | Allows indexing; the pages must be publicly reachable |
 
@@ -41,15 +41,26 @@ should not wait for a Git build. The API token lives outside the repository, at
 
 ```
 CLOUDFLARE_API_TOKEN=$(cat ~/.config/cloudflare/token) \
-  wrangler pages deploy public --project-name mwololo-space --branch main
+CLOUDFLARE_ACCOUNT_ID=90fa4530171f0b29b0b4c396d8505146 \
+  wrangler pages deploy public --project-name mwololo-space --branch main --force
 ```
+
+Two flags are load-bearing on wrangler 4.149.0. `--force` selects the classic
+Pages implementation; without it wrangler delegates to the Workers-based Pages
+and aborts with `This command cannot be run in a non-interactive context`.
+`CLOUDFLARE_ACCOUNT_ID` is required because this token cannot list accounts, so
+`wrangler whoami` fails with `Failed to automatically retrieve account IDs`.
 
 **Route B — Git-connected Pages.** Dashboard → Workers & Pages → Create → Pages →
 Connect to Git → pick this repository. Framework preset: **None**. Build command:
 empty. Build output directory: `public`.
 
-Either route ends the same way: Custom domains → Set up a domain → `mwololo.space`,
-then confirm `https://mwololo.space/`, `/privacy.html` and `/terms.html` return 200.
+Either route ends the same way: Custom domains → Set up a domain → `mwololo.space`.
+Attaching the domain over the API does **not** create the DNS record; the apex
+needs a proxied `CNAME mwololo.space → mwololo-space.pages.dev`. Then confirm
+`https://mwololo.space/`, `/privacy` and `/terms` return 200. Pages trims the
+`.html` extension: `/privacy.html` answers 308 with `location: /privacy`, so link
+and cite the clean URLs.
 
 Route A needs `wrangler` (`npm i -g wrangler`). Route B needs nothing local; the
 site is plain static files.
