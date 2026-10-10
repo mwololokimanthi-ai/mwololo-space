@@ -8,10 +8,14 @@ Static pages that satisfy Google's OAuth consent screen requirements for the per
 
 | file | served at | purpose |
 |---|---|---|
-| `index.html` | `/` | Home page: what the app is, who uses it, which scope it requests |
-| `privacy.html` | `/privacy.html` | Privacy policy incl. the Google API Limited Use statement |
-| `terms.html` | `/terms.html` | Terms of service |
-| `style.css` | `/style.css` | One shared stylesheet, no external assets, no trackers |
+| `public/index.html` | `/` | Home page: what the app is, who uses it, which scope it requests |
+| `public/privacy.html` | `/privacy.html` | Privacy policy incl. the Google API Limited Use statement |
+| `public/terms.html` | `/terms.html` | Terms of service |
+| `public/style.css` | `/style.css` | One shared stylesheet, no external assets, no trackers |
+| `public/robots.txt` | `/robots.txt` | Allows indexing; the pages must be publicly reachable |
+
+Only `public/` is published. Keeping the pages in a subdirectory means a direct
+upload can never push `.git/` to the web host.
 
 ## Why these pages exist
 
@@ -28,12 +32,24 @@ The app name on the consent screen and `<h1>` here must match. Today both read
 ## Deploy (Cloudflare Pages)
 
 The `mwololo.space` zone is on Cloudflare (`bart.ns.cloudflare.com`,
-`fay.ns.cloudflare.com`), so Pages can attach the apex and create the DNS record itself.
+`fay.ns.cloudflare.com`), so Pages can attach the apex and create the DNS record
+itself. `public/` is the build output directory in both routes below.
 
-1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git.
-2. Pick this repository. Framework preset: **None**. Build command: empty.
-   Build output directory: `/`.
-3. Deploy, then Custom domains → Set up a domain → `mwololo.space`.
-4. Confirm `https://mwololo.space/`, `/privacy.html` and `/terms.html` return 200.
+**Route A — direct upload.** Used for the first deployment, and for any edit that
+should not wait for a Git build. The API token lives outside the repository, at
+`~/.config/cloudflare/token` (mode 600), and is never committed.
 
-Node is not needed; the site is plain static files.
+```
+CLOUDFLARE_API_TOKEN=$(cat ~/.config/cloudflare/token) \
+  wrangler pages deploy public --project-name mwololo-space --branch main
+```
+
+**Route B — Git-connected Pages.** Dashboard → Workers & Pages → Create → Pages →
+Connect to Git → pick this repository. Framework preset: **None**. Build command:
+empty. Build output directory: `public`.
+
+Either route ends the same way: Custom domains → Set up a domain → `mwololo.space`,
+then confirm `https://mwololo.space/`, `/privacy.html` and `/terms.html` return 200.
+
+Route A needs `wrangler` (`npm i -g wrangler`). Route B needs nothing local; the
+site is plain static files.
